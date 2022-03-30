@@ -66,13 +66,17 @@ function objectBuilder(jPath, obj, value) {
 
   let it = obj;
   let jPathExists = false;
-  for (let i = 0; i < len - 1; i++) {
+  for (let i = 0; i < len; i++) {
     // jPath does not exists to the object, create it
-    let newObj = null;
+    let newObj;
     if (symbols[i].isArray) {
       newObj = [];
     } else {
       newObj = {};
+      // is the last element
+      if (len - 1 === i) {
+        newObj = value;
+      }
     }
 
     if (Array.isArray(it)) {
@@ -94,14 +98,6 @@ function objectBuilder(jPath, obj, value) {
       it = newObj;
     }
     jPathExists = false; // reset flag for next time
-  }
-
-  if (symbols[len - 2].isArray) {
-    const o = {};
-    o[symbols[len - 1].symbol] = value;
-    it.push(o);
-  } else {
-    it[symbols[len - 1].symbol] = value;
   }
 
   // console.dir(obj, {depth: null})
