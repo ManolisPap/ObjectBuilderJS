@@ -125,3 +125,49 @@ describe("Object Builder, Arrays and Objects", () => {
 });
 
 // =================================================================================
+
+describe("Object Builder, Nesting objects with multiple properties", () => {
+  test("Test D.1", () => {
+    const obj = {
+      name: "Manolis",
+      surname: "Papadospyridakis",
+    };
+
+    const tmp = objectBuilder("name", {}, "Manolis");
+    const result = objectBuilder("surname", tmp, "Papadospyridakis");
+
+    expect(result).toStrictEqual(obj); // fail
+  });
+
+  test("Test D.2", () => {
+    const obj = {
+      user: {
+        name: "Manolis",
+        surname: "Papadospyridakis",
+      },
+    };
+
+    const tmp = objectBuilder("user.name", {}, "Manolis");
+    const result = objectBuilder("user.surname", tmp, "Papadospyridakis");
+
+    expect(result).toStrictEqual(obj); // fail
+  });
+
+  test("Test D.3", () => {
+    const obj = {
+      user: {
+        company: {
+          companyName: "Art Of Jewelry",
+          vat: 123,
+        },
+      },
+    };
+
+    const tmp = objectBuilder("user.company.companyName", {}, "Art Of Jewelry");
+    const result = objectBuilder("user.company.vat", tmp, 123);
+
+    expect(result).toStrictEqual(obj); // fail
+  });
+});
+
+// =================================================================================
