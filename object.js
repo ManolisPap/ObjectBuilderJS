@@ -1,20 +1,3 @@
-const user = {
-  name: "Claus",
-  lastName: "Claus",
-  address: {
-    zipCode: 70200,
-    telephone: [
-      {
-        number: 123,
-      },
-      {
-        number: 345,
-      },
-    ],
-  },
-};
-
-// user.address.telephones[0].number
 function parseJPath(jpath) {
   const stringSymbols = jpath.split(".");
 
@@ -36,24 +19,6 @@ function parseJPath(jpath) {
   return symbols;
 }
 
-// parseJPath("user.address.telephones[0].number");
-
-// user.address.telephones[0].number
-
-const TMP = {
-  "user.name": "Claus",
-  "user.lastName": "Claus",
-  "user.address.zipCode": 70200,
-  "user.address.telephones[0].number": 123,
-  // "user.address.telephones[1].number": 345,
-};
-
-// {
-//   'users[0]': [ family: { name: 'Claus', members: 2 } ],
-//   'users[1]': [ family: { name: 'Jack' } ]
-// }
-//   users: [ { family: { name: 'Claus' } }, { members: 2 }, { name: 'Jack' } ]
-//                             {}
 function objectBuilder(jPath, obj, value) {
   const symbols = parseJPath(jPath);
   const len = symbols.length;
@@ -110,93 +75,5 @@ function objectBuilder(jPath, obj, value) {
 
   return obj;
 }
-
-// ============================================================
-
-// function jPathExists(jPath, obj) {
-//   const symbols = parseJPath(jPath);
-//   const len = symbols.length;
-
-//   let it = obj;
-// 	let prevIt = obj;
-//   if (symbols[0].isArray) {
-//     it = it[symbols[0].symbol].at(symbols[0].index);
-//   } else {
-//     it = it[symbols[0].symbol];
-//   }
-
-//   for (let i = 1; i < len; i++) {
-//     if (symbols[i].isArray) {
-//       it = it.at(symbols[i].index);
-//     } else {
-//       it = it[symbols[i].symbol];
-//     }
-
-//     if (!it) {
-//       // missing the last, so construct it.
-//       if (i + 1 === len) {
-//         // if prevIt is object, what if it is ARRAY?
-//         console.log("Path exists");
-//         prevIt[symbols[len - 1].symbol] = "xxx";
-//       } else {
-// 				console.log('missing path')
-//         // missing from the middle
-//       }
-//       return false;
-//     }
-
-//     prevIt = it;
-//   }
-
-// 	return true;
-// }
-
-// const obj = {user: {name: 'Claus'}}
-// jPathExists('user.surname', obj)
-// console.log(obj)
-
-// const obj = { user: { identity: { name: "Claus" } } };
-// jPathExists("user.identity.surname", obj);
-// console.log(obj);
-
-// const obj =  {user: [{name: 'Claus'}]};
-// jPathExists('user[0].surname', obj)
-// console.log(obj);
-
-// const obj = { user: { name: 'claus' } };
-// jPathExists("user.company.vat", obj);
-// console.log(obj);
-
-// jPathExists('user.surname', {user: {name: 'Claus', surname: 'x'}})
-
-// jPathExists('user[0].name', {user: [{name: 'Claus'}]})
-// const x = jPathExists('user[2].name', {user: [{name: 'Claus'}, {name: 'Claus2'}]})
-
-// console.log(x)
-
-// TODO: Does not work for the second telephone. The problem is that we store telephones[0] = [...] and so when we examine the telephones[1] there are created a new array.
-// TODO: We need a common array
-const state = {
-  "user.name": "Claus",
-  "user.lastName": "Claus",
-  "user.address.zipCode": 70200,
-  "user.address.telephones[0].number": 123,
-  // "user.address.telephones[1].number": 345,
-};
-
-// let obj = {};
-// for (let key in state) {
-// obj = objectBuilder(key, obj, state[key]);
-// }
-// console.dir(obj, { depth: null });
-
-// let obj = objectBuilder("user.name", {}, "Claus");
-// console.dir(obj, { depth: null });
-
-// obj = objectBuilder("x.telephone[0].number", obj, "Claus");
-// console.dir(obj, { depth: null });
-
-// obj = objectBuilder("telephone[0].telephoneId", obj, 1);
-// console.dir(obj, { depth: null });
 
 module.exports = objectBuilder;
