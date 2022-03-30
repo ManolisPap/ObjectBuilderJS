@@ -65,7 +65,7 @@ function objectBuilder(jPath, obj, value) {
   }
 
   let it = obj;
-	let jPathExists = false;
+  let jPathExists = false;
   for (let i = 0; i < len - 1; i++) {
     // jPath does not exists to the object, create it
     let newObj = null;
@@ -80,18 +80,20 @@ function objectBuilder(jPath, obj, value) {
       o[symbols[i].symbol] = newObj;
       it.push(o);
     } else {
-			if(!it[symbols[i].symbol]) { // does not already exists
-				it[symbols[i].symbol] = newObj; // create it, OLD
-			} else { // exists
-				it = it[symbols[i].symbol]; // get the obj existing value
-				jPathExists = true; // set the flag
-			}
-      
+      if (!it[symbols[i].symbol]) {
+        // does not already exists
+        it[symbols[i].symbol] = newObj; // create it, OLD
+      } else {
+        // exists
+        it = it[symbols[i].symbol]; // get the obj existing value
+        jPathExists = true; // set the flag
+      }
     }
-		if(!jPathExists){ // only if paths does not exists set it, to newObj, else get the existing one
-			it = newObj;
-		}
-		jPathExists = false; // reset flag for next time
+    if (!jPathExists) {
+      // only if paths does not exists set it, to newObj, else get the existing one
+      it = newObj;
+    }
+    jPathExists = false; // reset flag for next time
   }
 
   if (symbols[len - 2].isArray) {
@@ -115,6 +117,7 @@ function objectBuilder(jPath, obj, value) {
 let obj = objectBuilder("user[0].name", {}, "Manolis");
 obj = objectBuilder("user[0].surname", obj, "Papadospyridakis");
 obj = objectBuilder("user[0].age", obj, 18);
+obj = objectBuilder("user[0].friends[0].name", obj, "Jason");
 console.dir(obj, { depth: null });
 
 // console.dir(
