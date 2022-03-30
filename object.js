@@ -90,6 +90,12 @@ function objectBuilder(jPath, obj, value) {
       } else {
         // exists
         it = it[symbols[i].symbol]; // get the obj existing value
+
+        // if it is array and the element already exists, set it to that element.
+        if (symbols[i].isArray && it.length > symbols[i].index) {
+          it = it.at(symbols[i].index);
+        }
+
         jPathExists = true; // set the flag
       }
     }
@@ -104,22 +110,6 @@ function objectBuilder(jPath, obj, value) {
 
   return obj;
 }
-
-// let obj = objectBuilder("user.name", {}, "Manolis");
-// obj = objectBuilder("user.surname", obj, "Papadospyridakis");
-// obj = objectBuilder("user.age", obj, 18);
-// console.dir(obj, { depth: null });
-
-// let obj = objectBuilder("user[0].name", {}, "Manolis");
-// obj = objectBuilder("user[0].surname", obj, "Papadospyridakis");
-// obj = objectBuilder("user[0].age", obj, 18);
-// obj = objectBuilder("user[0].friends[0].name", obj, "Jason");
-// console.dir(obj, { depth: null });
-
-// console.dir(
-//   objectBuilder("user.name", {}, "Manolis"),
-//   { depth: null }
-// );
 
 // ============================================================
 
