@@ -414,6 +414,102 @@ describe("Object Builder, Arrays and Objects with multiple elements", () => {
 
     expect(result).toStrictEqual(obj); // fail
   });
+
+  test("Test F.3", () => {
+    const obj = {
+      order: {
+        courierCompanyId: 1,
+        pickupAddressId: 1,
+        pickupDateFrom: "31-03-2022",
+        pickupDateTo: "01-04-2022",
+        deliveryDateFrom: "02-04-2022",
+        deliveryDateTo: "03-04-2022",
+        recipient: {
+          name: "Kostas",
+          surname: "Papadospyridakis",
+          companyName: "-",
+          vat: "12341243",
+          addresses: [
+            {
+              address: "Leykosia",
+              zipCode: "3034",
+              city: "Leykosia",
+              floor: 3,
+              doorNumber: "4a",
+              telephones: [
+                {
+                  number: "6903456934",
+                },
+                {
+                  number: "2828282828",
+                },
+              ],
+            },
+          ],
+        },
+        packages: [
+          {
+            weight: 1.5,
+            height: 10,
+            width: 10,
+            length: 10,
+            comments: "Hi!",
+          },
+          {
+            weight: 2,
+            height: 20,
+            width: 20,
+            length: 20,
+            comments: "Hi2!",
+          },
+        ],
+      },
+    };
+
+    let tmp = objectBuilder("order.courierCompanyId", {}, 1);
+    tmp = objectBuilder("order.pickupAddressId", tmp, 1);
+    tmp = objectBuilder("order.pickupDateFrom", tmp, "31-03-2022");
+    tmp = objectBuilder("order.pickupDateTo", tmp, "01-04-2022");
+    tmp = objectBuilder("order.deliveryDateFrom", tmp, "02-04-2022");
+    tmp = objectBuilder("order.deliveryDateTo", tmp, "03-04-2022");
+    tmp = objectBuilder("order.recipient.name", tmp, "Kostas");
+    tmp = objectBuilder("order.recipient.surname", tmp, "Papadospyridakis");
+    tmp = objectBuilder("order.recipient.companyName", tmp, "-");
+    tmp = objectBuilder("order.recipient.vat", tmp, "12341243");
+    tmp = objectBuilder(
+      "order.recipient.addresses[0].address",
+      tmp,
+      "Leykosia"
+    );
+    tmp = objectBuilder("order.recipient.addresses[0].zipCode", tmp, "3034");
+    tmp = objectBuilder("order.recipient.addresses[0].city", tmp, "Leykosia");
+    tmp = objectBuilder("order.recipient.addresses[0].floor", tmp, 3);
+    tmp = objectBuilder("order.recipient.addresses[0].doorNumber", tmp, "4a");
+    tmp = objectBuilder(
+      "order.recipient.addresses[0].telephones[0].number",
+      tmp,
+      "6903456934"
+    );
+    tmp = objectBuilder(
+      "order.recipient.addresses[0].telephones[1].number",
+      tmp,
+      "2828282828"
+    );
+
+    tmp = objectBuilder("order.packages[0].weight", tmp, 1.5);
+    tmp = objectBuilder("order.packages[0].height", tmp, 10);
+    tmp = objectBuilder("order.packages[0].width", tmp, 10);
+    tmp = objectBuilder("order.packages[0].length", tmp, 10);
+    tmp = objectBuilder("order.packages[0].comments", tmp, "Hi!");
+
+    tmp = objectBuilder("order.packages[1].weight", tmp, 2);
+    tmp = objectBuilder("order.packages[1].height", tmp, 20);
+    tmp = objectBuilder("order.packages[1].width", tmp, 20);
+    tmp = objectBuilder("order.packages[1].length", tmp, 20);
+    tmp = objectBuilder("order.packages[1].comments", tmp, "Hi2!");
+
+    expect(tmp).toStrictEqual(obj); // fail
+  });
 });
 
 // =================================================================================

@@ -30,8 +30,8 @@ function objectBuilder(jPath, obj, value) {
   }
 
   let it = obj;
-  let jPathExists = false;
   for (let i = 0; i < len; i++) {
+    let jPathExists = false;
     // jPath does not exists to the object, create it
     let newObj;
     if (symbols[i].isArray) {
@@ -68,7 +68,6 @@ function objectBuilder(jPath, obj, value) {
       // only if paths does not exists set it, to newObj, else get the existing one
       it = newObj;
     }
-    jPathExists = false; // reset flag for next time
   }
 
   // console.dir(obj, {depth: null})
