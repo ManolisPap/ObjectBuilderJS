@@ -114,11 +114,11 @@ function objectBuilder(jPath, obj, value) {
 // obj = objectBuilder("user.age", obj, 18);
 // console.dir(obj, { depth: null });
 
-let obj = objectBuilder("user[0].name", {}, "Manolis");
-obj = objectBuilder("user[0].surname", obj, "Papadospyridakis");
-obj = objectBuilder("user[0].age", obj, 18);
-obj = objectBuilder("user[0].friends[0].name", obj, "Jason");
-console.dir(obj, { depth: null });
+// let obj = objectBuilder("user[0].name", {}, "Manolis");
+// obj = objectBuilder("user[0].surname", obj, "Papadospyridakis");
+// obj = objectBuilder("user[0].age", obj, 18);
+// obj = objectBuilder("user[0].friends[0].name", obj, "Jason");
+// console.dir(obj, { depth: null });
 
 // console.dir(
 //   objectBuilder("user.name", {}, "Manolis"),
