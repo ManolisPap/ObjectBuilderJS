@@ -22,29 +22,41 @@ function parseJPath(jpath) {
 function objectBuilder(jPath, obj, value) {
   const symbols = parseJPath(jPath);
   const len = symbols.length;
+  const last = len - 1;
 
-  // case: name = "Jack"
   if (len === 1) {
-    obj[symbols[0].symbol] = value;
+    const symbol = symbols[0].symbol;
+    const isArray = symbols[0].isArray;
+    if (isArray) {
+      if (!obj[symbol]) {
+        obj[symbol] = [value];
+      } else {
+        obj[symbol].push(value);
+      }
+    } else {
+      obj[symbol] = value;
+    }
     return obj;
   }
 
   let it = obj;
   for (let i = 0; i < len; i++) {
     let jPathExists = false;
-    // jPath does not exists to the object, create it
     let newObj;
     if (symbols[i].isArray) {
       newObj = [];
+      if (i === last) {
+        newObj.push(value);
+      }
     } else {
       newObj = {};
-      // is the last element
-      if (len - 1 === i) {
+      if (i === last) {
         newObj = value;
       }
     }
 
     if (Array.isArray(it)) {
+      // when the previous is Array
       const o = {};
       o[symbols[i].symbol] = newObj;
       it.push(o);
@@ -54,14 +66,17 @@ function objectBuilder(jPath, obj, value) {
         it[symbols[i].symbol] = newObj; // create it, OLD
       } else {
         // exists
+        jPathExists = true;
         it = it[symbols[i].symbol]; // get the obj existing value
 
         // if it is array and the element already exists, set it to that element.
         if (symbols[i].isArray && it.length > symbols[i].index) {
           it = it.at(symbols[i].index);
         }
-
-        jPathExists = true; // set the flag
+        // if it is the last symbols and is array, will contain raw values (not objects)
+        if (i === last && symbols[i].isArray) {
+          it.push(value);
+        }
       }
     }
     if (!jPathExists) {

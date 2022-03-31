@@ -90,9 +90,59 @@ describe("Object Builder, Arrays", () => {
       123
     );
 
-    console.dir(result, { depth: null });
-
     expect(result).toStrictEqual(obj); // fail
+  });
+
+  test("Test B.4", () => {
+    const obj = {
+      numbers: [123],
+    };
+
+    let tmp = objectBuilder("numbers[0]", {}, 123);
+
+    expect(tmp).toStrictEqual(obj); // fail
+  });
+
+  test("Test B.5", () => {
+    const obj = {
+      numbers: [123, 345],
+    };
+
+    let tmp = objectBuilder("numbers[0]", {}, 123);
+    tmp = objectBuilder("numbers[1]", tmp, 345);
+
+    expect(tmp).toStrictEqual(obj); // fail
+  });
+
+  test("Test B.6", () => {
+    const obj = {
+      address: {
+        numbers: [123, 345],
+        address: "Kalamaki",
+      },
+    };
+
+    let tmp = objectBuilder("address.numbers[0]", {}, 123);
+    tmp = objectBuilder("address.numbers[1]", tmp, 345);
+    tmp = objectBuilder("address.address", tmp, "Kalamaki");
+
+    expect(tmp).toStrictEqual(obj); // fail
+  });
+
+  test("Test B.7", () => {
+    const obj = {
+      user: {
+        company: {
+          addresses: [{ telephones: [123, 345] }],
+        },
+      },
+    };
+
+    let tmp = objectBuilder("user.company.addresses[0].telephones[0]", {}, 123);
+
+    tmp = objectBuilder("user.company.addresses[0].telephones[1]", tmp, 345);
+
+    expect(tmp).toStrictEqual(obj); // fail
   });
 });
 
@@ -221,7 +271,6 @@ describe("Object Builder, Arrays with multiple elements", () => {
       tmp,
       345
     );
-    console.dir(result, { depth: null });
     expect(result).toStrictEqual(obj); // fail
   });
 
@@ -243,7 +292,6 @@ describe("Object Builder, Arrays with multiple elements", () => {
       tmp,
       345
     );
-    console.dir(result, { depth: null });
     expect(result).toStrictEqual(obj); // fail
   });
 
@@ -272,7 +320,6 @@ describe("Object Builder, Arrays with multiple elements", () => {
       tmp,
       345
     );
-    console.dir(result, { depth: null });
     expect(result).toStrictEqual(obj); // fail
   });
 
@@ -301,7 +348,6 @@ describe("Object Builder, Arrays with multiple elements", () => {
       tmp,
       345
     );
-    console.dir(result, { depth: null });
     expect(result).toStrictEqual(obj); // fail
   });
 
