@@ -119,4 +119,4 @@ function objectBuilder(jPath: string, obj: any, value: Primitive) {
 
   return obj;
 }
-export default objectBuilder;
+export { objectBuilder };

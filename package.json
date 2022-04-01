@@ -2,8 +2,8 @@
   "name": "object-builder-js",
   "version": "1.0.0",
   "description": "Object Builder From String Description",
-  "main": "lib/ObjectBuilder.js",
-  "types": "lib/ObjectBuilder.d.ts",
+  "main": "lib/src/ObjectBuilder.js",
+  "types": "lib/src/ObjectBuilder.d.ts",
   "files": [
     "lib/**/*"
   ],

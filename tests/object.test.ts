@@ -1,4 +1,4 @@
-import objectBuilder from '../src/ObjectBuilder';
+import { objectBuilder } from '../src/ObjectBuilder';
 
 describe('Check Parameters', () => {
   test('Test 1', () => {
