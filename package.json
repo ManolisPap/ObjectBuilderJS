@@ -1,6 +1,6 @@
 {
   "name": "object-builder-js",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Object Builder From String Description",
   "main": "lib/src/ObjectBuilder.js",
   "types": "lib/src/ObjectBuilder.d.ts",

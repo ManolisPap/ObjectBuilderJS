@@ -7,11 +7,18 @@ This package will help you to create an object based on a string description.
 Example:
 
 ```js
-// Example 1
+// require
+// const objectBuilder = require("object-builder-js").objectBuilder;
+
+// or import (need to add "type": "module", into package.json)
+import { objectBuilder } from 'object-builder-js';
+
 const user = objectBuilder('name', {}, 'Bob');
 objectBuilder('surname', user, 'Smith');
 objectBuilder('addresses[0].zipCode', user, '1234');
 objectBuilder('addresses[1].zipCode', user, '5678');
+
+console.dir(user, { depth: null });
 
 // user would look like
 /*
