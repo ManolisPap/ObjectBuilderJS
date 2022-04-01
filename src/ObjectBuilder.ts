@@ -1,5 +1,5 @@
 // const utils = require("./utils");
-import { isObject, isString, isJsonPrimitive, Primitive } from "./utils";
+import { isObject, isString, isJsonPrimitive, Primitive } from './utils';
 
 type SymbolArray = {
   symbol: string;
@@ -15,15 +15,15 @@ type SymbolObject = {
 
 type JPathSymbol = SymbolArray | SymbolObject;
 
-function parseJPath(jPath: string): Array<JPathSymbol> {
-  const stringSymbols = jPath.split(".");
+function parseJPath(jPath: string): JPathSymbol[] {
+  const stringSymbols = jPath.split('.');
 
   const symbols = stringSymbols.map((strSymbol) => {
-    if (strSymbol.includes("[")) {
+    if (strSymbol.includes('[')) {
       return {
-        symbol: strSymbol.split("[")[0],
+        symbol: strSymbol.split('[')[0],
         isArray: true,
-        index: parseInt(strSymbol.split("[")[1].split("]")[0]),
+        index: parseInt(strSymbol.split('[')[1].split(']')[0], 10),
       } as SymbolArray;
     } else {
       return {
@@ -44,9 +44,7 @@ function parametersCheck(jPath: string, obj: any, value: Primitive) {
     throw new Error("'obj' need to be an object!");
   }
   if (!isJsonPrimitive(value)) {
-    throw new Error(
-      "'value' need to be a string or number or boolean or null!"
-    );
+    throw new Error("'value' need to be a string or number or boolean or null!");
   }
 }
 
@@ -101,7 +99,7 @@ function objectBuilder(jPath: string, obj: any, value: Primitive) {
         jPathExists = true;
         it = it[symbols[i].symbol]; // get the obj existing value
 
-        if (symbols[i].isArray && it.length > <number>symbols[i].index) {
+        if (symbols[i].isArray && it.length > (symbols[i].index as number)) {
           // if it is array and the element already exists, set it to that element.
           it = it.at(symbols[i].index);
         }
