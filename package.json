@@ -1,5 +1,5 @@
 {
-  "name": "tmp",
+  "name": "object-builder-js",
   "version": "1.0.0",
   "description": "Object Builder From String Description",
   "main": "lib/ObjectBuilder.js",
