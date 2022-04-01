@@ -1,6 +1,55 @@
 // import objectBuilder from '../object';
 
-const objectBuilder = require("../object");
+const objectBuilder = require("../object.js");
+
+describe("Check Parameters", () => {
+  test("Test G.1", () => {
+    const f = () => {
+      objectBuilder(null, {}, "val");
+    };
+
+    expect(f).toThrow(Error);
+    expect(f).toThrow(/need to be a string/);
+  });
+
+  test("Test 2", () => {
+    const f = () => {
+      objectBuilder({}, {}, "val");
+    };
+
+    expect(f).toThrow(Error);
+    expect(f).toThrow(/need to be a string/);
+  });
+
+  test("Test 3", () => {
+    const f = () => {
+      objectBuilder("name", [], "val");
+    };
+
+    expect(f).toThrow(Error);
+    expect(f).toThrow(/need to be an object/);
+  });
+
+  test("Test 4", () => {
+    const f = () => {
+      objectBuilder("name", {}, {});
+    };
+
+    expect(f).toThrow(Error);
+    expect(f).toThrow(/need to be a string or number or boolean or null/);
+  });
+
+  test("Test 5", () => {
+    const f = () => {
+      objectBuilder("name", {}, undefined);
+    };
+
+    expect(f).toThrow(Error);
+    expect(f).toThrow(/need to be a string or number or boolean or null/);
+  });
+});
+
+// =================================================================================
 
 describe("Object Builder, Nesting objects", () => {
   test("Test A.1", () => {

@@ -1,3 +1,6 @@
+const utils = require("./utils");
+// import { isObject, isString, isJsonPrimitive } from "./utils.js";
+
 function parseJPath(jpath) {
   const stringSymbols = jpath.split(".");
 
@@ -19,7 +22,22 @@ function parseJPath(jpath) {
   return symbols;
 }
 
+function parametersCheck(jPath, obj, value) {
+  if (!utils.isString(jPath)) {
+    throw new Error("'jPath' need to be a string!");
+  }
+  if (!utils.isObject(obj)) {
+    throw new Error("'obj' need to be an object!");
+  }
+  if (!utils.isJsonPrimitive(value)) {
+    throw new Error(
+      "'value' need to be a string or number or boolean or null!"
+    );
+  }
+}
+
 function objectBuilder(jPath, obj, value) {
+  parametersCheck(jPath, obj, value);
   const symbols = parseJPath(jPath);
   const len = symbols.length;
   const last = len - 1;
