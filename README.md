@@ -10,15 +10,15 @@ Example:
 // Example 1
 const user = objectBuilder('name', {}, 'Bob');
 objectBuilder('surname', user, 'Smith');
-objectBuilder('address[0].zipCode', user, '1234');
-objectBuilder('address[1].zipCode', user, '5678');
+objectBuilder('addresses[0].zipCode', user, '1234');
+objectBuilder('addresses[1].zipCode', user, '5678');
 
 // user would look like
 /*
 {
   name: 'Bob',
   surname: 'Smith',
-  address: [ { zipCode: '1234' }, { zipCode: '5678' } ]
+  addresses: [ { zipCode: '1234' }, { zipCode: '5678' } ]
 }
 */
 ```
