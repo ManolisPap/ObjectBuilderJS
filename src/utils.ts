@@ -1,12 +1,14 @@
-function isObject(obj) {
+function isObject(obj: any) {
   return obj && typeof obj === "object" && obj.constructor === Object;
 }
 
-function isString(str) {
+function isString(str: any) {
   return typeof str === "string";
 }
 
-function isJsonPrimitive(value) {
+type Primitive = string | number | boolean | null;
+
+function isJsonPrimitive(value: Primitive) {
   return (
     typeof value === "string" ||
     typeof value === "number" ||
@@ -15,10 +17,4 @@ function isJsonPrimitive(value) {
   );
 }
 
-module.exports = {
-  isObject,
-  isString,
-  isJsonPrimitive,
-};
-
-// export { isObject, isString, isJsonPrimitive };
+export { isObject, isString, isJsonPrimitive, type Primitive };

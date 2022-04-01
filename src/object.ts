@@ -1,8 +1,22 @@
-const utils = require("./utils");
-// import { isObject, isString, isJsonPrimitive } from "./utils.js";
+// const utils = require("./utils");
+import { isObject, isString, isJsonPrimitive, Primitive } from "./utils";
 
-function parseJPath(jpath) {
-  const stringSymbols = jpath.split(".");
+type SymbolArray = {
+  symbol: string;
+  isArray: true;
+  index: number;
+};
+
+type SymbolObject = {
+  symbol: string;
+  isArray: false;
+  index?: never;
+};
+
+type JPathSymbol = SymbolArray | SymbolObject;
+
+function parseJPath(jPath: string): Array<JPathSymbol> {
+  const stringSymbols = jPath.split(".");
 
   const symbols = stringSymbols.map((strSymbol) => {
     if (strSymbol.includes("[")) {
@@ -10,33 +24,33 @@ function parseJPath(jpath) {
         symbol: strSymbol.split("[")[0],
         isArray: true,
         index: parseInt(strSymbol.split("[")[1].split("]")[0]),
-      };
+      } as SymbolArray;
     } else {
       return {
         symbol: strSymbol,
         isArray: false,
-      };
+      } as SymbolObject;
     }
   });
 
   return symbols;
 }
 
-function parametersCheck(jPath, obj, value) {
-  if (!utils.isString(jPath)) {
+function parametersCheck(jPath: string, obj: any, value: Primitive) {
+  if (!isString(jPath)) {
     throw new Error("'jPath' need to be a string!");
   }
-  if (!utils.isObject(obj)) {
+  if (!isObject(obj)) {
     throw new Error("'obj' need to be an object!");
   }
-  if (!utils.isJsonPrimitive(value)) {
+  if (!isJsonPrimitive(value)) {
     throw new Error(
       "'value' need to be a string or number or boolean or null!"
     );
   }
 }
 
-function objectBuilder(jPath, obj, value) {
+function objectBuilder(jPath: string, obj: any, value: Primitive) {
   parametersCheck(jPath, obj, value);
   const symbols = parseJPath(jPath);
   const len = symbols.length;
@@ -75,7 +89,7 @@ function objectBuilder(jPath, obj, value) {
 
     if (Array.isArray(it)) {
       // when the previous is Array
-      const o = {};
+      const o: any = {};
       o[symbols[i].symbol] = newObj;
       it.push(o);
     } else {
@@ -87,8 +101,8 @@ function objectBuilder(jPath, obj, value) {
         jPathExists = true;
         it = it[symbols[i].symbol]; // get the obj existing value
 
-        // if it is array and the element already exists, set it to that element.
-        if (symbols[i].isArray && it.length > symbols[i].index) {
+        if (symbols[i].isArray && it.length > <number>symbols[i].index) {
+          // if it is array and the element already exists, set it to that element.
           it = it.at(symbols[i].index);
         }
         // if it is the last symbols and is array, will contain raw values (not objects)
@@ -107,5 +121,4 @@ function objectBuilder(jPath, obj, value) {
 
   return obj;
 }
-
-module.exports = objectBuilder;
+export default objectBuilder;
